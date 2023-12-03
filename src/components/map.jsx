@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Popup, Marker } from "react-leaflet"
 
 
-export default function Map(props){
+export default function Map({children}){
     const position = [51.955, 7.62]
         
     return(
@@ -15,6 +15,7 @@ export default function Map(props){
                 A pretty CSS3 popup. <br /> Easily customizable.
             </Popup>
             </Marker>
+            {children}
         </MapContainer>
     )
 }
