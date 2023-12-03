@@ -33,8 +33,13 @@ const HistoricalData = () => {
         ]
     }
 
+    const onEachFeature = (feature, layer) => {
+        const {name, shortDesc} = feature.properties
+        layer.bindPopup(`<b>${name}</b><br />${shortDesc}`)
+    }
+
   return (
-    <GeoJSON data={data}/>
+    <GeoJSON data={data} onEachFeature={onEachFeature}/>
   )
 }
 
