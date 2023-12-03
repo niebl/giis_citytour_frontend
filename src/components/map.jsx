@@ -1,6 +1,5 @@
 import { MapContainer, TileLayer, Popup, Marker } from "react-leaflet"
 
-
 export default function Map({children}){
     const position = [51.955, 7.62]
         

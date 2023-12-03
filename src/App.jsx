@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 
 import Map from './components/map'
 import UserLocationMarker from './components/mapComponents/UserLocationMarker';
+import UserLocationAgent from './components/mapComponents/UserLocationAgent';
 
 const UserLocationContext = createContext({
   userLocationState: null,
@@ -23,7 +24,7 @@ function App() {
     <UserLocationContext.Provider value={{userLocationState, setUserLocationState}}>
       <div className="h-full w-full">
         <Map>
-          <UserLocationMarker />
+          <UserLocationAgent />  
         </Map>
       </div>
     </UserLocationContext.Provider>

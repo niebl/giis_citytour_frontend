@@ -1,10 +1,9 @@
 import { Popup, Marker } from "react-leaflet"
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 import { UserLocationContext } from "../../App";
 
 function UserLocationMarker(){
     const { userLocationState, setUserLocationState } = useContext(UserLocationContext)
-    console.log(userLocationState)
 
     if (userLocationState == null){
         return <></>
