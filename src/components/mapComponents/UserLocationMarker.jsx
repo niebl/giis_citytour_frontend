@@ -10,7 +10,7 @@ import iconUserLocation from "./iconUserLocation";
 function UserLocationMarker(){
     const userLocation = useRecoilValue(userLocationState)
 
-    if (userLocation[0] == null){
+    if (userLocation === null || userLocation[0] == null){
         return <></>
     }
 

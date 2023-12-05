@@ -14,20 +14,20 @@ function equalWithinPrecision(number1, number2, decimals=5){
 export default function UserLocationAgent(children){
     const userLocation = useRecoilValue(userLocationState)
     const setUserLocation = useSetRecoilState(userLocationState)
-    console.log(userLocation)
     const { coords, isGeolocationAvailable, isGeolocationEnabled } =
         useGeolocated({
             positionOptions: {
                 enableHighAccuracy: false,
             },
+            watchPosition: true,
             userDecisionTimeout: 5000,
     });
 
     useEffect(() => {
         if( !isGeolocationAvailable ){
-            setUserLocation(null)
+            setUserLocation([null, null])
         } else if (!isGeolocationEnabled){
-            setUserLocation(null)
+            setUserLocation([null, null])
         } else if (coords) {
             const coordinates = [coords.latitude, coords.longitude]
             if( userLocation === null || userLocation[0] === null){
@@ -39,8 +39,7 @@ export default function UserLocationAgent(children){
                 setUserLocation(coordinates)
             }
         }
-    })
-    
+    }, [coords])
 
     return(
         <></>
