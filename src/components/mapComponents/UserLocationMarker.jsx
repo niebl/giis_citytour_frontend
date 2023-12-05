@@ -1,19 +1,21 @@
 import { Popup, Marker } from "react-leaflet"
 import L from 'leaflet';
 import { createContext, useContext, useEffect } from 'react';
-import { UserLocationContext } from "../../App";
+import { useRecoilValue } from "recoil";
+
+import { userLocationState } from "../../atoms";
 
 import iconUserLocation from "./iconUserLocation";
 
 function UserLocationMarker(){
-    const { userLocationState, setUserLocationState } = useContext(UserLocationContext)
+    const userLocation = useRecoilValue(userLocationState)
 
-    if (userLocationState == null){
+    if (userLocation === null || userLocation[0] == null){
         return <></>
     }
 
     return(
-        <Marker position={userLocationState} icon={iconUserLocation}>
+        <Marker position={userLocation} icon={iconUserLocation}>
         <Popup>
             user location
         </Popup>
