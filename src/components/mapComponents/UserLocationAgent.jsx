@@ -1,5 +1,6 @@
 import { useEffect, useContext } from "react";
-import { UserLocationContext } from "../../App";
+import { userLocationState } from "../../atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useGeolocated } from "react-geolocated";
 import UserLocationMarker from "./UserLocationMarker";
 
@@ -11,7 +12,9 @@ function equalWithinPrecision(number1, number2, decimals=5){
 }
 
 export default function UserLocationAgent(children){
-    const { userLocationState, setUserLocationState } = useContext(UserLocationContext)
+    const userLocation = useRecoilValue(userLocationState)
+    const setUserLocation = useSetRecoilState(userLocationState)
+    console.log(userLocation)
     const { coords, isGeolocationAvailable, isGeolocationEnabled } =
         useGeolocated({
             positionOptions: {
@@ -20,23 +23,26 @@ export default function UserLocationAgent(children){
             userDecisionTimeout: 5000,
     });
 
-    if( !isGeolocationAvailable ){
-        setUserLocationState(null)
-    } else if (!isGeolocationEnabled){
-        setUserLocationState(null)
-    } else if (coords) {
-        const coordinates = [coords.latitude, coords.longitude]
-        if( userLocationState === null){
-            setUserLocationState(coordinates)
-        } else if( 
-            !equalWithinPrecision(userLocationState[0], coordinates[0]) && 
-            !equalWithinPrecision(userLocationState[1], coordinates[1])
-        ){
-            setUserLocationState(coordinates)
+    useEffect(() => {
+        if( !isGeolocationAvailable ){
+            setUserLocation(null)
+        } else if (!isGeolocationEnabled){
+            setUserLocation(null)
+        } else if (coords) {
+            const coordinates = [coords.latitude, coords.longitude]
+            if( userLocation === null || userLocation[0] === null){
+                setUserLocation(coordinates)
+            } else if( 
+                !equalWithinPrecision(userLocation[0], coordinates[0]) && 
+                !equalWithinPrecision(userLocation[1], coordinates[1])
+            ){
+                setUserLocation(coordinates)
+            }
         }
-    }
+    })
+    
 
     return(
-        <UserLocationMarker />
+        <></>
     )
 }
