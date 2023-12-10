@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { userLocationState } from "../../atoms";
+import { userLocationState } from "../../../atoms";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useGeolocated } from "react-geolocated";
 import UserLocationMarker from "./UserLocationMarker";

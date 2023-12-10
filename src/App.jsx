@@ -2,8 +2,8 @@ import './App.css'
 import "leaflet/dist/leaflet.css";
 
 import Map from './components/map'
-import UserLocationAgent from './components/mapComponents/UserLocationAgent';
-import UserLocationMarker from './components/mapComponents/UserLocationMarker';
+import UserLocationAgent from './components/mapComponents/UserLocation/UserLocationAgent';
+import UserLocationMarker from './components/mapComponents/UserLocation/UserLocationMarker';
 import HistoricalData from './components/mapComponents/HistoricalData';
 
 import { useRecoilValue, useSetRecoilState  } from "recoil";
