@@ -1,8 +1,11 @@
 import { useEffect, useContext } from "react";
-import { userLocationState } from "../../../atoms";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useGeolocated } from "react-geolocated";
 import UserLocationMarker from "./UserLocationMarker";
+
+import { 
+    userLocationState
+} from "../../../atoms";
 
 //useful reference for desired coordinate precision: https://xkcd.com/2170/
 function equalWithinPrecision(number1, number2, decimals=5){
@@ -14,6 +17,7 @@ function equalWithinPrecision(number1, number2, decimals=5){
 export default function UserLocationAgent(children){
     const userLocation = useRecoilValue(userLocationState)
     const setUserLocation = useSetRecoilState(userLocationState)
+
     const { coords, isGeolocationAvailable, isGeolocationEnabled } =
         useGeolocated({
             positionOptions: {
@@ -38,7 +42,9 @@ export default function UserLocationAgent(children){
             ){
                 setUserLocation(coordinates)
             }
+            console.log(coordinates)
         }
+
     }, [coords])
 
     return(
