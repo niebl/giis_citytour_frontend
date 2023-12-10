@@ -9,6 +9,7 @@ import HistoricalData from './components/mapComponents/HistoricalData';
 import { useRecoilValue, useSetRecoilState  } from "recoil";
 import { mapViewState } from "./atoms";
 import { useEffect } from 'react';
+import StoryView from './components/mapComponents/views/StoryView';
 
 
 function App() {
@@ -45,8 +46,19 @@ function App() {
         
         <Map>
           <UserLocationAgent />
-          <UserLocationMarker />
-          <HistoricalData />
+          
+          { mapView == 'cruising' &&
+          <>
+            <UserLocationMarker />
+            <HistoricalData />  
+          </>
+          } 
+
+          { mapView == 'story' &&
+            <StoryView>
+            </StoryView>
+          } 
+
         </Map>
       </div>
     </>

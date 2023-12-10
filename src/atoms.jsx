@@ -13,6 +13,11 @@ export const userLocationState = atom({
   default: [null, null], // default value (aka initial value)
 });
 
+export const gameWaypointProgressState = atom({
+  key: 'gameWaypointProgressState',
+  default: 0
+})
+
 export const mapViewState = atom({
   key: 'mapViewState',
   default: 'cruising' // 'cruising' | 'story' | 'debug'
