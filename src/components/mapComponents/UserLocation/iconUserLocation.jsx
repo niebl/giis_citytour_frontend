@@ -5,7 +5,7 @@ const icon =
 
 const iconUserLocation = L.divIcon({
     html: icon,
-    className: "userLocationIcon",
+    className: "h-20",
     iconSize: [10,10],
     iconAnchor: [11,11],
 })

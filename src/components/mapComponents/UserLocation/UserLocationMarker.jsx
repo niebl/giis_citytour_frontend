@@ -3,7 +3,7 @@ import L from 'leaflet';
 import { createContext, useContext, useEffect } from 'react';
 import { useRecoilValue } from "recoil";
 
-import { userLocationState } from "../../atoms";
+import { userLocationState } from "../../../atoms";
 
 import iconUserLocation from "./iconUserLocation";
 
