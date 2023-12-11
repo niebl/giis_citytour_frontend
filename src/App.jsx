@@ -27,8 +27,8 @@ function App() {
 
   return (
     <>
-    <TopNavbar />
-      <div className="h-full w-full">
+      <TopNavbar />
+      <div className="h-full">
         {
         // the following buttons elements should go into the navigation components
         // could be replaced with a toggle-button too
