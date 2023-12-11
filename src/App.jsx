@@ -11,6 +11,7 @@ import { mapViewState, gameWaypointProgressState } from "./atoms";
 import { useEffect } from 'react';
 import StoryView from './components/mapComponents/views/StoryView';
 import GameProgressAgent from './components/mapComponents/GameProgressAgent';
+import { TopNavbar } from './components/navbar/Navbar';
 
 function App() {
   const mapView = useRecoilValue(mapViewState);
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <>
+    <TopNavbar />
       <div className="h-full w-full">
         {
         // the following buttons elements should go into the navigation components
