@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
+    "@material-tailwind/react": "^2.1.5",
     "@turf/distance": "^6.5.0",
     "@turf/helpers": "^6.5.0",
     "npm": "^10.2.5",
