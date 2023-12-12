@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import StoryView from './components/mapComponents/views/StoryView';
 import GameProgressAgent from './components/mapComponents/GameProgressAgent';
 import { TopNavbar } from './components/navbar/Navbar';
+import InfoModal from './components/InfoModal/InfoModal';
 
 function App() {
   const mapView = useRecoilValue(mapViewState);
@@ -28,6 +29,7 @@ function App() {
   return (
     <>
       <TopNavbar />
+      <InfoModal />
       <div className="h-full">
         {
         // the following buttons elements should go into the navigation components
