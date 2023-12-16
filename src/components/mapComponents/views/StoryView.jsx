@@ -28,15 +28,13 @@ const StoryView = () => {
         popupAnchor: [0, -32],
     })
     const waypointMarker = (feature, latlng) => {
-        const { name, shortDesc } = feature.properties
+        const { name, short_desc, story_desc } = feature.properties
         const marker = L.marker(latlng, { icon: buildingIcon })
-        marker.bindPopup(`<b>${name}</b><br />${shortDesc}`)
+        marker.bindPopup(`<b>${name}</b><br />${short_desc}`)
         return marker
     }
     const waypointMarkerInactive = (feature, latlng) => {
-        //const { name, shortDesc } = feature.properties
         const marker = L.marker(latlng, { icon: buildingIcon, opacity: 0.4 })
-        //marker.bindPopup(`<b>${name}</b><br />${shortDesc}`)
         return marker
     }
 
