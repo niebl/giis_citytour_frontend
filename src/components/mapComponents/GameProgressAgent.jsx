@@ -25,11 +25,11 @@ export default function GameProgressAgent(){
             const waypoints = tourData.features
             for (let waypoint of waypoints){
                 //check if player sufficiently close enough to the active waypoint
-                if(waypoint.properties.order == waypointProgress+1){
+                if(waypoint.properties.site_index == waypointProgress+1){
                     if(distance(
                         waypoint.geometry.coordinates, flip(userLocation),
                         {units: 'meters'}
-                        ) <= 200 ){
+                        ) <= 50 ){
                         setWaypointProgress(waypointProgress+1)
                     }
                 }
