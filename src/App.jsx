@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './App.css'
 import "leaflet/dist/leaflet.css";
 
@@ -13,11 +14,14 @@ import StoryView from './components/mapComponents/views/StoryView';
 import GameProgressAgent from './components/mapComponents/GameProgressAgent';
 import { TopNavbar } from './components/navbar/Navbar';
 import InfoModal from './components/InfoModal/InfoModal';
+import MoreInfoDrawer from './components/mapComponents/MoreInfo/MoreInfoDrawer';
 
 function App() {
   const mapView = useRecoilValue(mapViewState);
   const setMapView = useSetRecoilState(mapViewState);
   const gameProgress = useRecoilValue(gameWaypointProgressState);
+
+  const [ selectedFeature, setSelectedFeature ] = useState(null)
 
   function setViewCruising(state){
     setMapView('cruising')
@@ -58,7 +62,7 @@ function App() {
           { mapView == 'cruising' &&
           <>
             <UserLocationMarker />
-            <HistoricalData />  
+            <HistoricalData setSelectedFeature={setSelectedFeature} />  
           </>
           } 
 
@@ -69,9 +73,9 @@ function App() {
             </StoryView>
           </>
           } 
-
         </Map>
       </div>
+      {selectedFeature && <MoreInfoDrawer selectedFeature={selectedFeature} /> }
     </>
   )
 }

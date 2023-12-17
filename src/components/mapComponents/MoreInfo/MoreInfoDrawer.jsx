@@ -49,8 +49,8 @@ const MoreInfoDrawer = ({ selectedFeature }) => {
                 />
                 </svg>
             </IconButton>
-            <Card className="mt-6 w-auto">
-                <CardHeader color="blue-gray" className="relative h-fit">
+            <Card className="mt-6 w-auto overflow-auto">
+                <CardHeader color="blue-gray" floated={false} className="relative h-fit">
                     <img
                     src={sampleImage}
                     alt="museum-image"

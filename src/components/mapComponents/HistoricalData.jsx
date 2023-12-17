@@ -8,8 +8,7 @@ import templateData from './templateData.json'
 
 const data = templateData
 
-const HistoricalData = () => {
-    const [ selectedFeature, setSelectedFeature ] = useState(null)
+const HistoricalData = ({ setSelectedFeature }) => {
 
     const customIcon = L.icon({
         iconUrl: icon,
@@ -20,9 +19,12 @@ const HistoricalData = () => {
 
     const onMarkerClick = (e) => {
         const featureProperties = e.target.feature.properties;
-        console.log(featureProperties)
         setSelectedFeature(featureProperties)
-      };
+      }; 
+
+    const showMoreInfo = (featureInfo) => {
+        console.log(featureInfo)
+    }
 
     const createMarker = (feature, latlng) => {
         const { name, short_desc } = feature.properties
@@ -31,7 +33,7 @@ const HistoricalData = () => {
             <div class="flex flex-col">
                 <b>${name}</b><br />
                 ${short_desc} <br />
-                <button class="bg-blue-500 text-white py-1 px-2 rounded mt-2 self-end" onclick="showMoreInfo('${feature.id}')">More Info</button>
+                <button class="bg-blue-500 text-white py-1 px-2 rounded mt-2 self-end" onclick="showMoreInfo('${feature.properties}')">More Info</button>
             </div>
         `
         marker.bindPopup(popupContent)
