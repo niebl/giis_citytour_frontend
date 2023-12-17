@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { GeoJSON } from "react-leaflet"
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -8,6 +9,7 @@ import templateData from './templateData.json'
 const data = templateData
 
 const HistoricalData = () => {
+    const [ selectedFeature, setSelectedFeature ] = useState(null)
 
     const customIcon = L.icon({
         iconUrl: icon,
@@ -16,9 +18,15 @@ const HistoricalData = () => {
         popupAnchor: [0, -32],
     })
 
+    const onMarkerClick = (e) => {
+        const featureProperties = e.target.feature.properties;
+        console.log(featureProperties)
+        setSelectedFeature(featureProperties)
+      };
+
     const createMarker = (feature, latlng) => {
         const { name, short_desc } = feature.properties
-        const marker = L.marker(latlng, { icon: customIcon })
+        const marker = L.marker(latlng, { icon: customIcon }).on('click', onMarkerClick);
         const popupContent = `
             <div class="flex flex-col">
                 <b>${name}</b><br />
