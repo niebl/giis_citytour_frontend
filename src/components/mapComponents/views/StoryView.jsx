@@ -27,7 +27,7 @@ const buildingIconActive = L.icon({
     className: 'blinking-marker'
 })
 
-const StoryView = () => {
+const StoryView = ({ setSelectedFeature }) => {
     //TODO: implement a system that updates player progress
     const waypointProgress = useRecoilValue(waypointProgessState);
 
@@ -35,9 +35,18 @@ const StoryView = () => {
         return <></>
     }
 
+    const onMarkerClick = (e) => {
+        const featureProperties = e.target.feature.properties;
+        setSelectedFeature(featureProperties)
+      }; 
+
+    const showMoreInfo = (featureInfo) => {
+        console.log(featureInfo)
+    }
+
     const waypointMarker = (feature, latlng) => {
         const { name, short_desc, story_desc } = feature.properties
-        const marker = L.marker(latlng, { icon: buildingIcon })
+        const marker = L.marker(latlng, { icon: buildingIcon }).on('click', onMarkerClick);
         marker.bindPopup(`<b>${name}</b><br />${short_desc}`)
         return marker
     }
@@ -50,7 +59,7 @@ const StoryView = () => {
         const marker = L.marker(latlng, { 
             icon: buildingIconActive
             }
-        )
+        ).on('click', onMarkerClick);
         marker.bindPopup(`<b>${name}</b><br />${story_desc}`)
         return marker
     }
