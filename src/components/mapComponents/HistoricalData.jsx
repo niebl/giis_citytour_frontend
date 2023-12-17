@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { GeoJSON } from "react-leaflet"
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -7,7 +8,7 @@ import templateData from './templateData.json'
 
 const data = templateData
 
-const HistoricalData = () => {
+const HistoricalData = ({ setSelectedFeature }) => {
 
     const customIcon = L.icon({
         iconUrl: icon,
@@ -16,18 +17,26 @@ const HistoricalData = () => {
         popupAnchor: [0, -32],
     })
 
-    // const onEachFeature = (feature, layer) => {
-    //     const {name, shortDesc} = feature.properties
+    const onMarkerClick = (e) => {
+        const featureProperties = e.target.feature.properties;
+        setSelectedFeature(featureProperties)
+      }; 
 
-    //     const marker = L.marker(layer._latlng, { icon: customIcon })
-    //     marker.bindPopup(`<b>${name}</b><br />${shortDesc}`);
-    //     marker.addTo(layer._map);
-    // }
+    const showMoreInfo = (featureInfo) => {
+        console.log(featureInfo)
+    }
 
     const createMarker = (feature, latlng) => {
         const { name, short_desc } = feature.properties
-        const marker = L.marker(latlng, { icon: customIcon })
-        marker.bindPopup(`<b>${name}</b><br />${short_desc}`)
+        const marker = L.marker(latlng, { icon: customIcon }).on('click', onMarkerClick);
+        const popupContent = `
+            <div class="flex flex-col">
+                <b>${name}</b><br />
+                ${short_desc} <br />
+                <button class="bg-blue-500 text-white py-1 px-2 rounded mt-2 self-end" onclick="showMoreInfo('${feature.properties}')">More Info</button>
+            </div>
+        `
+        marker.bindPopup(popupContent)
 
         return marker
     }
