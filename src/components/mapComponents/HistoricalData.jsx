@@ -16,18 +16,17 @@ const HistoricalData = () => {
         popupAnchor: [0, -32],
     })
 
-    // const onEachFeature = (feature, layer) => {
-    //     const {name, shortDesc} = feature.properties
-
-    //     const marker = L.marker(layer._latlng, { icon: customIcon })
-    //     marker.bindPopup(`<b>${name}</b><br />${shortDesc}`);
-    //     marker.addTo(layer._map);
-    // }
-
     const createMarker = (feature, latlng) => {
         const { name, short_desc } = feature.properties
         const marker = L.marker(latlng, { icon: customIcon })
-        marker.bindPopup(`<b>${name}</b><br />${short_desc}`)
+        const popupContent = `
+            <div class="flex flex-col">
+                <b>${name}</b><br />
+                ${short_desc} <br />
+                <button class="bg-blue-500 text-white py-1 px-2 rounded mt-2 self-end" onclick="showMoreInfo('${feature.id}')">More Info</button>
+            </div>
+        `
+        marker.bindPopup(popupContent)
 
         return marker
     }
