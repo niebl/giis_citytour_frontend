@@ -46,3 +46,10 @@ html, body {
 .read-the-docs {
   color: #888;
 }
+
+@keyframes fade { 
+  from { opacity: 0.5; } 
+}
+.blinking-marker {
+  animation: fade 1s infinite alternate;
+}

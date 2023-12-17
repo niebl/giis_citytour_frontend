@@ -5,6 +5,7 @@ import { TemplateGeoJSON as tourData } from "../HistoricalData";
 import { useRecoilValue, useSetRecoilState  } from "recoil";
 
 import icon from '../../../assets/historyIcon3.svg'
+import iconRed from '../../../assets/historyIcon3_red.svg'
 import UserLocationMarker from '../UserLocation/UserLocationMarker';
 
 import { 
@@ -18,23 +19,15 @@ const buildingIcon = L.icon({
     iconAnchor: [16, 32],
     popupAnchor: [0, -32],
 })
+const buildingIconActive = L.icon({
+    iconUrl: iconRed,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+    className: 'blinking-marker'
+})
 
-const MarkerVisited = (props)=>{
-    const feature = props.feature
-    console.log(f)
-    const key = props.key || ""
-    const { name, short_desc, story_desc } = feature.properties
-    const coords = feature.geometry.coordinates
-    return (
-        <Marker icon={buildingIcon} position={[coords[1], coords[0]]} key={key}>
-            <Popup>
-                <b>${name}</b><br />${short_desc}
-            </Popup>
-        </Marker>
-    )
-}
-
-const StoryView = () => {
+const StoryView = ({ setSelectedFeature }) => {
     //TODO: implement a system that updates player progress
     const waypointProgress = useRecoilValue(waypointProgessState);
 
@@ -42,12 +35,18 @@ const StoryView = () => {
         return <></>
     }
 
-    const waypoints = []
-    const waypointsInactive = []
+    const onMarkerClick = (e) => {
+        const featureProperties = e.target.feature.properties;
+        setSelectedFeature(featureProperties)
+      }; 
+
+    const showMoreInfo = (featureInfo) => {
+        console.log(featureInfo)
+    }
 
     const waypointMarker = (feature, latlng) => {
         const { name, short_desc, story_desc } = feature.properties
-        const marker = L.marker(latlng, { icon: buildingIcon })
+        const marker = L.marker(latlng, { icon: buildingIcon }).on('click', onMarkerClick);
         marker.bindPopup(`<b>${name}</b><br />${short_desc}`)
         return marker
     }
@@ -55,21 +54,22 @@ const StoryView = () => {
         const marker = L.marker(latlng, { icon: buildingIcon, opacity: 0.4 })
         return marker
     }
-
-    for (let waypoint of tourData.features){
-        if (waypoint.properties.order <= waypointProgress){
-            waypoints.push(waypoint)
-        } else {
-            waypointsInactive.push(waypoint)
-        }
+    const waypointMarkerToVisit = (feature, latlng) => {
+        const { name, short_desc, story_desc } = feature.properties
+        const marker = L.marker(latlng, { 
+            icon: buildingIconActive
+            }
+        ).on('click', onMarkerClick);
+        marker.bindPopup(`<b>${name}</b><br />${story_desc}`)
+        return marker
     }
 
     return (
         <>
-        <Pane name="waypoints" style={{ zIndex: 200 }}>
+        <Pane name="waypoints" style={{ zIndex: 300 }}>
             <FeatureGroup>
             {tourData.features.map((waypoint, index) => {
-                if(waypoint.properties.site_index <= waypointProgress){
+                if(waypoint.properties.site_index < waypointProgress+1){
                     return (
                         <GeoJSON
                             data={waypoint}
@@ -85,10 +85,29 @@ const StoryView = () => {
             </FeatureGroup>
         </Pane>
 
+        <Pane name="waypointActive" style={{ zIndex: 200 }}>
+            <FeatureGroup>
+            {tourData.features.map((waypoint, index) => {
+                if(waypoint.properties.site_index == waypointProgress+1){
+                    return (
+                        <GeoJSON
+                            data={waypoint}
+                            key={"active_Waypoint"}
+                            pointToLayer={waypointMarkerToVisit}
+                            //onEachFeature={}
+                            //style={}
+                        />
+                    )
+                }
+            })
+            }
+            </FeatureGroup>
+        </Pane>
+
         <Pane name="waypointsInactive" style={{ zIndex: 100 }}>
         <FeatureGroup>
             {tourData.features.map((waypoint, index) => {
-                if(waypoint.properties.site_index > waypointProgress){                    
+                if(waypoint.properties.site_index > waypointProgress+1){                    
                     return (               
                         <GeoJSON
                             data={waypoint  }
