@@ -27,21 +27,6 @@ const buildingIconActive = L.icon({
     className: 'blinking-marker'
 })
 
-const MarkerVisited = (props)=>{
-    const feature = props.feature
-    console.log(f)
-    const key = props.key || ""
-    const { name, short_desc, story_desc } = feature.properties
-    const coords = feature.geometry.coordinates
-    return (
-        <Marker icon={buildingIcon} position={[coords[1], coords[0]]} key={key}>
-            <Popup>
-                <b>${name}</b><br />${short_desc}
-            </Popup>
-        </Marker>
-    )
-}
-
 const StoryView = () => {
     //TODO: implement a system that updates player progress
     const waypointProgress = useRecoilValue(waypointProgessState);
@@ -49,9 +34,6 @@ const StoryView = () => {
     if (tourData == undefined || tourData.features == undefined){
         return <></>
     }
-
-    const waypoints = []
-    const waypointsInactive = []
 
     const waypointMarker = (feature, latlng) => {
         const { name, short_desc, story_desc } = feature.properties
@@ -71,14 +53,6 @@ const StoryView = () => {
         )
         marker.bindPopup(`<b>${name}</b><br />${story_desc}`)
         return marker
-    }
-
-    for (let waypoint of tourData.features){
-        if (waypoint.properties.order <= waypointProgress){
-            waypoints.push(waypoint)
-        } else {
-            waypointsInactive.push(waypoint)
-        }
     }
 
     return (
