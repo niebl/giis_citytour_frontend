@@ -75,7 +75,7 @@ function App() {
           } 
         </Map>
       </div>
-      {selectedFeature && <MoreInfoDrawer selectedFeature={selectedFeature} /> }
+      {selectedFeature && <MoreInfoDrawer selectedFeature={selectedFeature} setSelectedFeature={setSelectedFeature} /> }
     </>
   )
 }

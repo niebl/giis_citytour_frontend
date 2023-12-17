@@ -12,14 +12,19 @@ import {
   } from "@material-tailwind/react";
 import sampleImage from "../../../assets/images/birmingham-museums-trust-Cv0k6jv3-Vo-unsplash.jpg"
 
-const MoreInfoDrawer = ({ selectedFeature }) => {
+const MoreInfoDrawer = ({ selectedFeature, setSelectedFeature }) => {
     const [ open, setOpen ] = useState(false)
     const openDrawer = () => setOpen(true);
-    const closeDrawer = () => setOpen(false);
+    const closeDrawer = () => {
+        setSelectedFeature(false)
+        setTimeout(1000, ()=>{setOpen(false)})
+    };
 
     useEffect(() => {
         if (selectedFeature) {
-            openDrawer()
+            if(!open){
+                openDrawer()
+            }
             console.log(selectedFeature)
         }
     }, [selectedFeature])
