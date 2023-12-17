@@ -48,31 +48,50 @@ const StoryView = () => {
 
     return (
         <>
-        <Pane name="waypoints" style={{ zIndex: 100 }}>
+        <Pane name="waypoints" style={{ zIndex: 200 }}>
             <FeatureGroup>
-                <GeoJSON
-                    data={waypoints}
-                    key={'waypoint'}
-                    pointToLayer={waypointMarker}
-                    //onEachFeature={}
-                    //style={}
-                />
+            {tourData.features.map((waypoint) => {
+                if(waypoint.properties.site_index <= waypointProgress){
+                    console.log("one over")
+                    return (
+                        <GeoJSON
+                            data={waypoint}
+                            key={'waypoint'}
+                            pointToLayer={waypointMarker}
+                            //onEachFeature={}
+                            //style={}
+                        />
+                    )
+                }
+            })
+            }
             </FeatureGroup>
         </Pane>
+
         <Pane name="waypointsInactive" style={{ zIndex: 100 }}>
-            <FeatureGroup>
-                <GeoJSON
-                    data={waypointsInactive}
-                    key={'waypointInactive'}
-                    pointToLayer={waypointMarkerInactive}
-                    //onEachFeature={}
-                    //style={}
-                />
+        <FeatureGroup>
+            {tourData.features.map((waypoint) => {
+                if(waypoint.properties.site_index > waypointProgress){
+                    console.log("one under")
+                    return (               
+                        <GeoJSON
+                            data={waypoint}
+                            key={'waypoint'}
+                            pointToLayer={waypointMarkerInactive}
+                            //onEachFeature={}
+                            //style={}
+                        />
+                    )
+                }
+            })
+            }
             </FeatureGroup>
         </Pane>
+
         <Pane name="userLocation" style={{ zIndex: 200 }}>
             <UserLocationMarker />
         </Pane>
+
         </>
     )
 }
