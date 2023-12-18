@@ -16,8 +16,8 @@ const MoreInfoDrawer = ({ selectedFeature, setSelectedFeature }) => {
     const [ open, setOpen ] = useState(false)
     const openDrawer = () => setOpen(true);
     const closeDrawer = () => {
-        setSelectedFeature(false)
-        setTimeout(1000, ()=>{setOpen(false)})
+        setSelectedFeature(null)
+        setOpen(false)
     };
 
     useEffect(() => {
