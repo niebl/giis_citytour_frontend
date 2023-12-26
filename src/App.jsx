@@ -28,8 +28,24 @@ function App() {
       <TopNavbar />
       <InfoModal />
       <div className="h-full">
-        
-        <Map>
+
+      
+        <h1
+          style={{
+            backgroundColor: "#00000060",
+            zIndex: 1000,
+            position: 'absolute',
+            left: '50%',
+            translate: '-50% 0'
+          }}
+          className='text-white rounded-full m-2 p-1 px-6'
+        >
+          {mapView == 'cruising' && "Exploration mode"}
+          {mapView == 'story' && "Story mode"}
+        </h1>
+    
+
+        <Map style={{zIndex: 0}}>
           <UserLocationAgent />
           
           { mapView == 'cruising' &&

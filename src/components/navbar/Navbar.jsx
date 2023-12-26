@@ -73,7 +73,7 @@ export function TopNavbar() {
   return (
     <Navbar 
         color="blue-gray"
-        className="sticky top-0 z-10 h-max max-w-full rounded-none lg:px-8 lg:py-4 mx-auto from-blue-gray-900 to-blue-gray-800 px-4 py-3"
+        className="sticky top-0 z-10 h-max max-w-full rounded-none lg:px-8 lg:py-1 mx-auto from-blue-gray-900 to-blue-gray-800 px-4 py-3"
     >
       <div className="flex items-center justify-between text-white">
         <Typography
