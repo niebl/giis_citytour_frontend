@@ -7,8 +7,23 @@ import {
 } from "@material-tailwind/react";
 import { FaBars } from "react-icons/fa6";
 import { IoCloseSharp } from "react-icons/io5";
+import { useRecoilValue, useSetRecoilState  } from "recoil";
+
+import { mapViewState } from "../../atoms";
  
 function NavList() {
+  const mapView = useRecoilValue(mapViewState);
+  const setMapView = useSetRecoilState(mapViewState);
+
+  function toggleMapView(){
+    if (mapView != 'story'){
+      setMapView('story')
+    }
+    else {
+      setMapView('cruising')
+    }
+  }
+
   return (
     <ul className="my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
@@ -19,6 +34,23 @@ function NavList() {
         <a href="#" className="flex items-center transition-colors">
           About
         </a>
+      </Typography>
+      <Typography
+        as="li"
+        variant="paragraph"
+        className="p-1 font-medium"
+      >
+        <button 
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-1"
+          onClick={()=>{toggleMapView()}}
+          >
+          { mapView == 'story' &&
+            "to Exploration-mode"
+          }
+          { mapView == 'cruising' &&
+            "to Story-mode"
+          }
+        </button>
       </Typography>
     </ul>
   );

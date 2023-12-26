@@ -23,39 +23,12 @@ function App() {
 
   const [ selectedFeature, setSelectedFeature ] = useState(null)
 
-  function setViewCruising(state){
-    setMapView('cruising')
-  }
-  function setViewStory(state){
-    setMapView('story')
-  }
-
   return (
     <>
       <TopNavbar />
       <InfoModal />
       <div className="h-full">
-        {
-        // the following buttons elements should go into the navigation components
-        // could be replaced with a toggle-button too
-        // all the other stuff is demontration that the things are working. can be removed later
-        }
-        <button 
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-1"
-          onClick={setViewCruising}
-          >
-          cruising mode 
-        </button>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-1"
-          onClick={setViewStory}
-          >
-          story mode
-        </button>
-        <h1>{mapView} mode</h1>
-        { mapView == 'story' &&
-          <h1>waypoints visited {gameProgress}</h1>
-        }
+        
         <Map>
           <UserLocationAgent />
           
