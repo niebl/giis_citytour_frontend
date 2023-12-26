@@ -92,7 +92,7 @@ const StoryView = ({ setSelectedFeature }) => {
                     return (
                         <GeoJSON
                             data={waypoint}
-                            key={"active_Waypoint"}
+                            key={"active_Waypoint"+index}
                             pointToLayer={waypointMarkerToVisit}
                             //onEachFeature={}
                             //style={}
