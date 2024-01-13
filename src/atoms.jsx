@@ -22,3 +22,8 @@ export const mapViewState = atom({
   key: 'mapViewState',
   default: 'cruising' // 'cruising' | 'story' | 'debug'
 })
+
+export const backendURL = atom({
+  key: 'backendURL',
+  default: 'localhost:3001'
+})

@@ -8,7 +8,7 @@ import UserLocationMarker from './components/mapComponents/UserLocation/UserLoca
 import HistoricalData from './components/mapComponents/HistoricalData';
 
 import { useRecoilValue, useSetRecoilState  } from "recoil";
-import { mapViewState, gameWaypointProgressState } from "./atoms";
+import { mapViewState, gameWaypointProgressState, backendURL } from "./atoms";
 import { useEffect } from 'react';
 import StoryView from './components/mapComponents/views/StoryView';
 import GameProgressAgent from './components/mapComponents/GameProgressAgent';
@@ -23,6 +23,11 @@ function App() {
 
   const [ selectedFeature, setSelectedFeature ] = useState(null)
 
+  const setBackendURL = useSetRecoilState(backendURL)
+
+  useEffect(() => {
+    setBackendURL(import.meta.env.VITE_BACKEND_URL)
+  })
   return (
     <>
       <TopNavbar />

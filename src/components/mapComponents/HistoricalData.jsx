@@ -5,10 +5,16 @@ import 'leaflet/dist/leaflet.css';
 
 import icon from '../../assets/historyIcon3.svg'
 import templateData from './templateData.json'
+import useExternalData from "./useExternalData";
 
-const data = templateData
+//const data = templateData
 
 const HistoricalData = ({ setSelectedFeature }) => {
+    const backendData = useExternalData(1)
+
+    if (backendData == undefined){
+      return <></>
+    }
 
     const customIcon = L.icon({
         iconUrl: icon,
@@ -42,7 +48,7 @@ const HistoricalData = ({ setSelectedFeature }) => {
     }
 
   return (
-    <GeoJSON data={data} pointToLayer={createMarker}/>
+    <GeoJSON data={backendData} pointToLayer={createMarker}/>
   )
 }
 
