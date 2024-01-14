@@ -41,7 +41,7 @@ function NavList() {
         className="p-1 font-medium"
       >
         <button 
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-1"
+          className="bg-[#964b00] hover:bg-[#7b3f00] text-white font-bold py-2 px-4 rounded m-1"
           onClick={()=>{toggleMapView()}}
           >
           { mapView == 'story' &&
@@ -72,8 +72,8 @@ export function TopNavbar() {
  
   return (
     <Navbar 
-        color="blue-gray"
-        className="sticky top-0 z-10 h-max max-w-full rounded-none lg:px-8 lg:py-1 mx-auto from-blue-gray-900 to-blue-gray-800 px-4 py-3"
+        // color="blue-gray"
+        className="sticky top-0 z-10 h-max max-w-full rounded-none lg:px-8 lg:py-1 mx-auto bg-gradient-to-r from-brown-500 to-brown-800 px-4 py-3"
     >
       <div className="flex items-center justify-between text-white">
         <Typography
