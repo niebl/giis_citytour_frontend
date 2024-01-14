@@ -53,3 +53,11 @@ html, body {
 .blinking-marker {
   animation: fade 1s infinite alternate;
 }
+
+/* Add dark theme to map */
+.leaflet-layer,
+/* .leaflet-control-zoom-in, */
+/* .leaflet-control-zoom-out, */
+.leaflet-control-attribution {
+  filter: invert(80%) hue-rotate(180deg) brightness(90%) contrast(90%);
+}
