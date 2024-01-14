@@ -1,7 +1,10 @@
-import { useState } from "react"
-import { GeoJSON } from "react-leaflet"
+import { useEffect } from 'react'
+import { TileLayer, Marker, Popup, GeoJSON, useMap } from "react-leaflet"
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet.markercluster'
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
 import icon from '../../assets/historyIcon3.svg'
 import templateData from './templateData.json'
@@ -10,6 +13,8 @@ const data = templateData
 
 const HistoricalData = ({ setSelectedFeature }) => {
 
+    const map = useMap()
+
     const customIcon = L.icon({
         iconUrl: icon,
         iconSize: [32, 32],
@@ -17,33 +22,51 @@ const HistoricalData = ({ setSelectedFeature }) => {
         popupAnchor: [0, -32],
     })
 
-    const onMarkerClick = (e) => {
-        const featureProperties = e.target.feature.properties;
-        setSelectedFeature(featureProperties)
-      }; 
-
     const showMoreInfo = (featureInfo) => {
-        console.log(featureInfo)
+      console.log(featureInfo)
+      setSelectedFeature(featureInfo)
     }
 
-    const createMarker = (feature, latlng) => {
-        const { name, short_desc } = feature.properties
-        const marker = L.marker(latlng, { icon: customIcon }).on('click', onMarkerClick);
+    // const onMarkerClick = (e) => {
+    //   console.log(e.target)
+    //   const featureProperties = e.target.feature.properties;
+    //   setSelectedFeature(featureProperties)
+    // }; 
+
+    useEffect(() => {
+      const markers = L.markerClusterGroup({
+        disableClusteringAtZoom: 21
+      })
+
+      data.features.forEach((feature, index) => {
+        const marker = L.marker([
+          feature.geometry.coordinates[1],
+          feature.geometry.coordinates[0],
+        ], { icon: customIcon })
+
+        marker.on('click', () => {
+          setSelectedFeature(feature.properties)
+        })
+
         const popupContent = `
             <div class="flex flex-col">
-                <b>${name}</b><br />
-                ${short_desc} <br />
+                <b>${feature.properties.name}</b><br />
+                ${feature.properties.short_desc} <br />
                 <button class="bg-blue-500 text-white py-1 px-2 rounded mt-2 self-end" onclick="showMoreInfo('${feature.properties}')">More Info</button>
             </div>
-        `
-        marker.bindPopup(popupContent)
+        `;
 
-        return marker
-    }
+        marker.bindPopup(popupContent);
 
-  return (
-    <GeoJSON data={data} pointToLayer={createMarker}/>
-  )
+        markers.addLayer(marker);
+
+      })
+
+      map.addLayer(markers)
+
+    }, [])
+
+  return null;
 }
 
 export default HistoricalData
