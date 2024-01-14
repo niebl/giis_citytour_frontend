@@ -35,6 +35,5 @@ export default function useExternalData(story_id=1){
 
     })
 
-    console.log(data)
     return data
 }

@@ -27,3 +27,8 @@ export const backendURL = atom({
   key: 'backendURL',
   default: 'localhost:3001'
 })
+
+export const selectedStoryState = atom({
+  key: 'selectedStoryState',
+  default: 1
+})
