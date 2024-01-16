@@ -2,13 +2,22 @@ import { useState } from "react"
 import { GeoJSON } from "react-leaflet"
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useRecoilValue } from "recoil";
 
 import icon from '../../assets/historyIcon3.svg'
 import templateData from './templateData.json'
+import useExternalData from "./useExternalData";
+import { selectedStoryState } from "../../atoms";
 
-const data = templateData
+//const data = templateData
 
 const HistoricalData = ({ setSelectedFeature }) => {
+    const story_id = useRecoilValue(selectedStoryState)
+    const backendData = useExternalData(story_id)
+
+    if (backendData == undefined){
+      return <></>
+    }
 
     const customIcon = L.icon({
         iconUrl: icon,
@@ -42,9 +51,8 @@ const HistoricalData = ({ setSelectedFeature }) => {
     }
 
   return (
-    <GeoJSON data={data} pointToLayer={createMarker}/>
+    <GeoJSON data={backendData} pointToLayer={createMarker}/>
   )
 }
 
 export default HistoricalData
-export {data as TemplateGeoJSON}

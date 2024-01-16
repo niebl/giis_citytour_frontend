@@ -42,7 +42,6 @@ export default function UserLocationAgent(children){
             ){
                 setUserLocation(coordinates)
             }
-            console.log(coordinates)
         }
 
     }, [coords])

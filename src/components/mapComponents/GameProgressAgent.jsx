@@ -4,9 +4,10 @@ import { useGeolocated } from "react-geolocated";
 import {point} from '@turf/helpers'
 import distance from '@turf/distance'
 
-import { TemplateGeoJSON as tourData } from "./HistoricalData";
+import useExternalData from "./useExternalData";
 
 import { 
+    selectedStoryState,
     userLocationState, 
     gameWaypointProgressState as waypointProgessState 
 } from '../../atoms';
@@ -16,6 +17,9 @@ function flip(coords){
 }
 
 export default function GameProgressAgent(){
+    const story_id = useRecoilValue(selectedStoryState)
+    const tourData = useExternalData(story_id)
+    
     const userLocation = useRecoilValue(userLocationState)
     const waypointProgress = useRecoilValue(waypointProgessState);
     const setWaypointProgress = useSetRecoilState(waypointProgessState)

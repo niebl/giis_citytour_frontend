@@ -1,16 +1,17 @@
 /* eslint-disable react/prop-types */
 import { FeatureGroup, GeoJSON, Marker, Pane, Popup } from 'react-leaflet';
 import L from 'leaflet';
-import { TemplateGeoJSON as tourData } from "../HistoricalData";
 import { useRecoilValue, useSetRecoilState  } from "recoil";
 
 import icon from '../../../assets/historyIcon3.svg'
 import iconRed from '../../../assets/historyIcon3_red.svg'
 import UserLocationMarker from '../UserLocation/UserLocationMarker';
+import useExternalData from '../useExternalData';
 
 import { 
+    selectedStoryState,
     userLocationState, 
-    gameWaypointProgressState as waypointProgessState 
+    gameWaypointProgressState as waypointProgessState,
 } from '../../../atoms';
 
 const buildingIcon = L.icon({
@@ -27,9 +28,14 @@ const buildingIconActive = L.icon({
     className: 'blinking-marker'
 })
 
-const StoryView = ({ setSelectedFeature }) => {
-    //TODO: implement a system that updates player progress
+const StoryView = ({ setSelectedFeature}) => {
+    const story_id = useRecoilValue(selectedStoryState);
+    const tourData = useExternalData(story_id)
     const waypointProgress = useRecoilValue(waypointProgessState);
+    
+    if (tourData == undefined) {
+        return <></>
+    }
 
     if (tourData == undefined || tourData.features == undefined){
         return <></>
@@ -45,9 +51,9 @@ const StoryView = ({ setSelectedFeature }) => {
     }
 
     const waypointMarker = (feature, latlng) => {
-        const { name, short_desc, story_desc } = feature.properties
+        const { name, short_story, long_story } = feature.properties
         const marker = L.marker(latlng, { icon: buildingIcon }).on('click', onMarkerClick);
-        marker.bindPopup(`<b>${name}</b><br />${short_desc}`)
+        marker.bindPopup(`<b>${name}</b><br />${long_story}`)
         return marker
     }
     const waypointMarkerInactive = (feature, latlng) => {
@@ -55,12 +61,12 @@ const StoryView = ({ setSelectedFeature }) => {
         return marker
     }
     const waypointMarkerToVisit = (feature, latlng) => {
-        const { name, short_desc, story_desc } = feature.properties
+        const { name, short_story, long_story } = feature.properties
         const marker = L.marker(latlng, { 
             icon: buildingIconActive
             }
         ).on('click', onMarkerClick);
-        marker.bindPopup(`<b>${name}</b><br />${story_desc}`)
+        marker.bindPopup(`<b>${name}</b><br />${long_story}`)
         return marker
     }
 
