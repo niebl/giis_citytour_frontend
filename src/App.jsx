@@ -31,7 +31,6 @@ function App() {
   return (
     <>
       <TopNavbar />
-      <InfoModal />
       <div className="h-full">
 
       
