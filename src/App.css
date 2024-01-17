@@ -56,9 +56,18 @@ html, body {
 }
 
 /* Add dark theme to map */
-.leaflet-layer,
+/* .leaflet-layer, */
 /* .leaflet-control-zoom-in, */
 /* .leaflet-control-zoom-out, */
-.leaflet-control-attribution {
+/* .leaflet-control-attribution {
   filter: invert(80%) hue-rotate(180deg) brightness(90%) contrast(90%);
+} */
+
+/* Add light brown theme to map */
+.leaflet-layer,
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out,
+.leaflet-control-attribution {
+  filter: sepia(55%) brightness(90%) contrast(90%) saturate(100%) hue-rotate(10deg);
+  background-color: #D2B48C;
 }
