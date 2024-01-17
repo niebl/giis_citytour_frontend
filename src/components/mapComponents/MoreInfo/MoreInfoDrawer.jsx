@@ -34,7 +34,7 @@ const MoreInfoDrawer = ({ selectedFeature, setSelectedFeature }) => {
         <Drawer 
             open={open} 
             onClose={closeDrawer} 
-            className="p-4"
+            className="p-4 overflow-auto"
             placement="right"
             overlay={false}
         >
@@ -54,7 +54,7 @@ const MoreInfoDrawer = ({ selectedFeature, setSelectedFeature }) => {
                 />
                 </svg>
             </IconButton>
-            <Card className="mt-6 w-auto overflow-auto">
+            <Card className="mt-6 mb-20 w-auto overflow-auto">
                 <CardHeader color="blue-gray" floated={false} className="relative h-fit">
                     <img
                     src={sampleImage}
