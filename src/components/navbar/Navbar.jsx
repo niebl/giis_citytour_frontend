@@ -9,11 +9,13 @@ import { FaBars } from "react-icons/fa6";
 import { IoCloseSharp } from "react-icons/io5";
 import { useRecoilValue, useSetRecoilState  } from "recoil";
 
-import { mapViewState } from "../../atoms";
+import { mapViewState, selectedStoryState } from "../../atoms";
  
 function NavList() {
   const mapView = useRecoilValue(mapViewState);
   const setMapView = useSetRecoilState(mapViewState);
+  const story_id = useRecoilValue(selectedStoryState);
+  const setStoryId = useSetRecoilState(selectedStoryState);
 
   function toggleMapView(){
     if (mapView != 'story'){
@@ -21,6 +23,15 @@ function NavList() {
     }
     else {
       setMapView('cruising')
+    }
+  }
+
+  function toggleSelectedStory(){
+    if (story_id == 1){
+      setStoryId(2)
+    }
+    else {
+      setStoryId(1)
     }
   }
 
@@ -49,6 +60,23 @@ function NavList() {
           }
           { mapView == 'cruising' &&
             "to Story-mode"
+          }
+        </button>
+      </Typography>
+      <Typography         
+        as="li"
+        variant="paragraph"
+        className="p-1 font-medium"
+      >
+        <button 
+          className="bg-[#964b00] hover:bg-[#7b3f00] text-white font-bold py-2 px-4 rounded m-1"
+          onClick={()=>{toggleSelectedStory()}}
+          >
+          { story_id == 1 &&
+            "to Port-Story"
+          }
+          { story_id == 2 &&
+            "to Inner-City-Story"
           }
         </button>
       </Typography>

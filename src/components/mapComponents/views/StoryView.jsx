@@ -79,7 +79,7 @@ const StoryView = ({ setSelectedFeature}) => {
                     return (
                         <GeoJSON
                             data={waypoint}
-                            key={"wp_"+index}
+                            key={"wp_"+index+Date.now()}
                             pointToLayer={waypointMarker}
                             //onEachFeature={}
                             //style={}
@@ -98,7 +98,7 @@ const StoryView = ({ setSelectedFeature}) => {
                     return (
                         <GeoJSON
                             data={waypoint}
-                            key={"active_Waypoint"+index}
+                            key={"active_Waypoint"+index+Date.now()}
                             pointToLayer={waypointMarkerToVisit}
                             //onEachFeature={}
                             //style={}
@@ -117,7 +117,7 @@ const StoryView = ({ setSelectedFeature}) => {
                     return (               
                         <GeoJSON
                             data={waypoint  }
-                            key={"wpI_"+index}
+                            key={"wpI_"+index+Date.now()}
                             pointToLayer={waypointMarkerInactive}
                             //onEachFeature={}
                             //style={}

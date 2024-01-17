@@ -5,12 +5,11 @@ import { useRecoilValue } from "recoil";
 const getExternalData = async (urlString) => {
     try {
         if (urlString == undefined){urlString =  ''}
-
         const res = await fetch(
             urlString,
         );
-        const data = await res.json();
-        return data;
+        const data = await res;
+        return data.json();
     } catch (error) {
 
         //TODO: error handling down the line
@@ -26,13 +25,12 @@ export default function useExternalData(story_id=1){
 
     useEffect(() => {
         getExternalData(urlString).then(e => setData(e))
-    },[])
+    },[story_id])
 
     useEffect(() => {
         if (!data) {
             return
         }
-
     })
 
     return data
