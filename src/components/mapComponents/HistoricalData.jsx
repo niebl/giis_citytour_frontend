@@ -51,7 +51,7 @@ const HistoricalData = ({ setSelectedFeature }) => {
     }
 
   return (
-    <GeoJSON data={backendData} pointToLayer={createMarker}/>
+    <GeoJSON data={backendData} pointToLayer={createMarker} key={"sites"+Date.now()}/>
   )
 }
 
