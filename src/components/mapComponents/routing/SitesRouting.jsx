@@ -1,30 +1,47 @@
-import { useEffect, memo } from 'react';
+import { useEffect, useCallback, memo } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import "leaflet-routing-machine"
 import "leaflet-routing-machine/dist/leaflet-routing-machine"
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css"
+import { userLocationState, gameWaypointProgressState,selectedStoryState } from '../../../atoms';
+import useExternalData from '../useExternalData';
+import { useRecoilValue } from "recoil";
 
 const SitesRouting = memo(() => {
     const map = useMap()
+    const story_id = useRecoilValue(selectedStoryState)
+    const tourData = useExternalData(story_id)
+    const userLocation = useRecoilValue(userLocationState)
+    const waypointProgress = useRecoilValue(gameWaypointProgressState)
+
+    const getActiveSite = useCallback(() => {
+        return tourData?.features?.find((element) => {
+          return element.properties.site_index === waypointProgress + 1;
+        });
+    }, [tourData, waypointProgress]);
 
     useEffect(() => {
-        const route = L.Routing.control({
-            waypoints: [
-                L.latLng(57.74, 11.94),
-                L.latLng(57.6792, 11.949)
-            ]
-        })
+        const activeSite = getActiveSite();
 
-        route.addTo(map)
+        if (activeSite) {
+            const activeSiteCoordinates = activeSite.geometry?.coordinates;
+            const route = L.Routing.control({
+              waypoints: [
+                L.latLng(userLocation[0], userLocation[1]),
+                L.latLng(activeSiteCoordinates[1], activeSiteCoordinates[0]),
+              ],
+            });
+      
+            route.addTo(map);
+      
+            return () => {
+              route.remove();
+            };
+          }
 
-        return () => {
-            // remove route control when component is unmounted
-            route.remove()
-        }
-
-    }, [])
+    }, [map, userLocation, getActiveSite])
 
     return null;
 })
