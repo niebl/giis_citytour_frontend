@@ -15,6 +15,7 @@ import GameProgressAgent from './components/mapComponents/GameProgressAgent';
 import { TopNavbar } from './components/navbar/Navbar';
 import InfoModal from './components/InfoModal/InfoModal';
 import MoreInfoDrawer from './components/mapComponents/MoreInfo/MoreInfoDrawer';
+import SitesRouting from './components/mapComponents/routing/SitesRouting';
 
 function App() {
   const mapView = useRecoilValue(mapViewState);
@@ -66,6 +67,9 @@ function App() {
             </StoryView>
           </>
           } 
+          {
+            mapView == 'story' && <SitesRouting />
+          }
         </Map>
       </div>
       {selectedFeature && <MoreInfoDrawer selectedFeature={selectedFeature} setSelectedFeature={setSelectedFeature} /> }

@@ -15,6 +15,7 @@
     "@turf/distance": "^6.5.0",
     "@turf/helpers": "^6.5.0",
     "dotenv": "^16.3.1",
+    "leaflet-routing-machine": "^3.2.12",
     "npm": "^10.2.5",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
