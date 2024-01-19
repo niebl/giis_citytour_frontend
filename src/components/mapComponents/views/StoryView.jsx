@@ -57,7 +57,7 @@ const StoryView = ({ setSelectedFeature}) => {
         return marker
     }
     const waypointMarkerInactive = (feature, latlng) => {
-        const marker = L.marker(latlng, { icon: buildingIcon, opacity: 0.4 })
+        const marker = L.marker(latlng, { icon: buildingIcon, opacity: 0 })
         return marker
     }
     const waypointMarkerToVisit = (feature, latlng) => {
