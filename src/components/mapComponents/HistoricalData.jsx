@@ -18,6 +18,10 @@ const HistoricalData = ({ setSelectedFeature }) => {
     const story_id = useRecoilValue(selectedStoryState)
     const backendData = useExternalData(story_id)
 
+    if (backendData == undefined || backendData.features == undefined) {
+      return <></>
+    }
+
     const customIcon = L.icon({
         iconUrl: icon,
         iconSize: [32, 32],

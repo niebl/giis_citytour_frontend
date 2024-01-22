@@ -33,12 +33,12 @@ const StoryView = ({ setSelectedFeature}) => {
     const tourData = useExternalData(story_id)
     const waypointProgress = useRecoilValue(waypointProgessState);
     
-    if (tourData == undefined) {
-        return <></>
-    }
-
-    if (tourData == undefined || tourData.features == undefined){
-        return <></>
+    if (tourData == undefined || tourData.features == undefined) {
+        return <>
+        <Pane name="userLocation" style={{ zIndex: 200 }}>
+            <UserLocationMarker />
+        </Pane>
+        </>
     }
 
     const onMarkerClick = (e) => {
