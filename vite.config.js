@@ -5,10 +5,9 @@ import { resolve } from 'path'
 const root =  resolve(__dirname, 'src')
 const outDir =  resolve(__dirname, 'dist')
 
-console.log(resolve(root, 'game', 'index.html'))
-
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/giis_citytour_frontend/',
   root,
   plugins: [react()],
   build: {
