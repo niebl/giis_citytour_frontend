@@ -32,7 +32,7 @@ export default function LandingPage(){
         
         <br/>
         <button 
-            onClick={()=>{location.href='/game/'}}
+            onClick={()=>{location.href='/giis_citytour_frontend/game/'}}
             className="bg-[#964b00] hover:bg-[#7b3f00] text-white font-bold py-2 px-4 rounded-lg m-1"
         >
             Enter Game

@@ -7,7 +7,7 @@ const outDir =  resolve(__dirname, 'dist')
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/<repo>/',
+  base: '/giis_citytour_frontend/',
   root,
   plugins: [react()],
   build: {
