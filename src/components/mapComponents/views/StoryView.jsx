@@ -35,9 +35,7 @@ const StoryView = ({ setSelectedFeature}) => {
     
     if (tourData == undefined || tourData.features == undefined) {
         return <>
-        <Pane name="userLocation" style={{ zIndex: 200 }}>
             <UserLocationMarker />
-        </Pane>
         </>
     }
 
