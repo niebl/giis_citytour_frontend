@@ -10,7 +10,6 @@ import {
     Typography,
     IconButton,
   } from "@material-tailwind/react";
-import sampleImage from "../../../assets/images/birmingham-museums-trust-Cv0k6jv3-Vo-unsplash.jpg"
 
 const MoreInfoDrawer = ({ selectedFeature, setSelectedFeature }) => {
     const [ open, setOpen ] = useState(false)
@@ -57,7 +56,7 @@ const MoreInfoDrawer = ({ selectedFeature, setSelectedFeature }) => {
             <Card className="mt-6 mb-20 w-auto overflow-auto">
                 <CardHeader color="blue-gray" floated={false} className="relative h-fit">
                     <img
-                    src={sampleImage}
+                    src={selectedFeature.image_url}
                     alt="museum-image"
                     className="object-fill"
                     />
