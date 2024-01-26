@@ -52,7 +52,6 @@ const HistoricalData = ({ setSelectedFeature }) => {
     }) */
 
     const siteMarker = (feature, latlng) => {
-      console.log("creating marker")
       const {name, short_desc, long_desc } = feature.properties
       const marker = L.marker(latlng, {
         icon: customIcon
