@@ -9,6 +9,7 @@ import UserLocationMarker from '../UserLocation/UserLocationMarker';
 import useExternalData from '../useExternalData';
 
 import { 
+    gameLengthState,
     selectedStoryState,
     userLocationState, 
     gameWaypointProgressState as waypointProgessState,
@@ -32,12 +33,15 @@ const StoryView = ({ setSelectedFeature}) => {
     const story_id = useRecoilValue(selectedStoryState);
     const tourData = useExternalData(story_id)
     const waypointProgress = useRecoilValue(waypointProgessState);
+    const setGameLength = useSetRecoilState(gameLengthState)
     
     if (tourData == undefined || tourData.features == undefined) {
         return <>
             <UserLocationMarker />
         </>
     }
+
+    setGameLength(tourData.features.length)
 
     const onMarkerClick = (e) => {
         const featureProperties = e.target.feature.properties;

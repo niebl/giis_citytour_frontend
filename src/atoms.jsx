@@ -18,6 +18,11 @@ export const gameWaypointProgressState = atom({
   default: 0
 })
 
+export const gameLengthState = atom({
+  key: 'gameLengthState',
+  default: 0
+})
+
 export const mapViewState = atom({
   key: 'mapViewState',
   default: 'cruising' // 'cruising' | 'story' | 'debug'
