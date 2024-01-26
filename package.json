@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@changey/react-leaflet-markercluster": "^4.0.0-rc1",
     "@headlessui/react": "^1.7.17",
     "@material-tailwind/react": "^2.1.5",
     "@turf/distance": "^6.5.0",

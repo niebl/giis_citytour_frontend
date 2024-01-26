@@ -1,10 +1,11 @@
-import { useEffect } from "react"
-import { TileLayer, Marker, Popup, GeoJSON, useMap } from "react-leaflet"
+import { useEffect } from "react";
+import { FeatureGroup, GeoJSON, Marker, Pane, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import 'leaflet.markercluster'
+ import 'leaflet.markercluster'
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import MarkerClusterGroup from '@changey/react-leaflet-markercluster';
 import { useRecoilValue } from "recoil";
 
 import icon from '../../assets/historyIcon3.svg'
@@ -14,9 +15,9 @@ import { selectedStoryState } from "../../atoms";
 //const data = templateData
 
 const HistoricalData = ({ setSelectedFeature }) => {
-    const map = useMap()
+    //const map = useMap()
     const story_id = useRecoilValue(selectedStoryState)
-    let backendData = useExternalData(story_id)
+    const backendData = useExternalData(story_id)
 
     if (backendData == undefined || backendData.features == undefined) {
       return <></>
@@ -29,14 +30,8 @@ const HistoricalData = ({ setSelectedFeature }) => {
         popupAnchor: [0, -32],
     })
 
-    const showMoreInfo = (featureInfo) => {
-      console.log(featureInfo)
-      setSelectedFeature(featureInfo)
-    }
 
-    const markers = L.markerClusterGroup({
-      disableClusteringAtZoom: 21
-    })
+/*     const markers = []
     backendData?.features.forEach((feature, index) => {
       const marker = L.marker([
         feature.geometry.coordinates[1],
@@ -53,13 +48,35 @@ const HistoricalData = ({ setSelectedFeature }) => {
           </div>
       `;
       marker.bindPopup(popupContent);
-      markers.addLayer(marker);
-    })
-    map.addLayer(markers)
-    return () => {
-      // remove markers from map when user switches to story mode
-      markers.remove()
+      markers.append(marker);
+    }) */
+
+    const siteMarker = (feature, latlng) => {
+      console.log("creating marker")
+      const {name, short_desc, long_desc } = feature.properties
+      const marker = L.marker(latlng, {
+        icon: customIcon
+      }).on('click', () => {
+        setSelectedFeature(feature.properties)
+      });
+      marker.bindPopup(`<b>${name}</b><br />${long_desc}`)
+      return marker
     }
+
+    return(
+      <Pane name="sites" style={{ zIndex: 200 }}>
+        <MarkerClusterGroup>
+          {backendData.features.map((waypoint, index) => {
+            return (<GeoJSON 
+              data={waypoint}
+              key={"wpI_"+index+Date.now()}
+              pointToLayer={siteMarker}
+            />)
+            })
+          }
+        </MarkerClusterGroup>
+      </Pane>
+    )
 
 
   return null;
