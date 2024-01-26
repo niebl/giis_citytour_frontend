@@ -31,10 +31,15 @@ function App() {
   })
   return (
     <>
-      <TopNavbar />
-      <div className="h-full">
+      <div className="h-full" id="pageWrapper"
+        style={{
+          display: "flex",
+          flexFlow: "column",
+          height: "100%"
+        }}>
+        <TopNavbar />
 
-      
+        <div style={{flex: "1 1 auto"}}>
         <h1
           style={{
             backgroundColor: "#00000060",
@@ -49,13 +54,12 @@ function App() {
           {mapView == 'story' && "Story mode"}
         </h1>
     
-
         <Map style={{zIndex: 0}}>
           <UserLocationAgent />
           
           { mapView == 'cruising' &&
           <>
-            <UserLocationMarker />
+            <UserLocationMarker />  
             <HistoricalData setSelectedFeature={setSelectedFeature} />  
           </>
           } 
@@ -71,6 +75,7 @@ function App() {
             mapView == 'story' && <SitesRouting />
           }
         </Map>
+        </div>
       </div>
       {selectedFeature && <MoreInfoDrawer selectedFeature={selectedFeature} setSelectedFeature={setSelectedFeature} /> }
     </>
