@@ -104,8 +104,8 @@ const StoryView = ({ setSelectedFeature}) => {
                                 waypoint.geometry.coordinates[1],
                                 waypoint.geometry.coordinates[0]
                             ]}
-                            /* radius={waypoint.properties.radius} */
-                            radius={50}
+                            radius={waypoint.properties.radius}
+                            key={"active_radius"+index+Date.now()}
                             opacity={0.6}
                             fillOpacity={0.1}
                             color='#ab000e'
