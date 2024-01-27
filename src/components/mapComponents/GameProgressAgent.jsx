@@ -30,10 +30,11 @@ export default function GameProgressAgent(){
             for (let waypoint of waypoints){
                 //check if player sufficiently close enough to the active waypoint
                 if(waypoint.properties.site_index == waypointProgress+1){
+                    const radius = waypoint.properties.radius || 50
                     if(distance(
                         waypoint.geometry.coordinates, flip(userLocation),
                         {units: 'meters'}
-                        ) <= 50 ){
+                        ) <= radius ){
                         setWaypointProgress(waypointProgress+1)
                     }
                 }
