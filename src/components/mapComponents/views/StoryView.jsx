@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { FeatureGroup, GeoJSON, Marker, Pane, Popup } from 'react-leaflet';
+import { FeatureGroup, GeoJSON, Marker, Pane, Popup, Circle } from 'react-leaflet';
 import L from 'leaflet';
 import { useRecoilValue, useSetRecoilState  } from "recoil";
 
@@ -98,6 +98,18 @@ const StoryView = ({ setSelectedFeature}) => {
             {tourData.features.map((waypoint, index) => {
                 if(waypoint.properties.site_index == waypointProgress+1){
                     return (
+                        <>
+                        <Circle 
+                            center={[
+                                waypoint.geometry.coordinates[1],
+                                waypoint.geometry.coordinates[0]
+                            ]}
+                            radius={waypoint.properties.radius}
+                            key={"active_radius"+index+Date.now()}
+                            opacity={0.6}
+                            fillOpacity={0.1}
+                            color='#ab000e'
+                        />
                         <GeoJSON
                             data={waypoint}
                             key={"active_Waypoint"+index+Date.now()}
@@ -105,6 +117,7 @@ const StoryView = ({ setSelectedFeature}) => {
                             //onEachFeature={}
                             //style={}
                         />
+                        </>
                     )
                 }
             })

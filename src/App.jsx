@@ -86,7 +86,7 @@ function App() {
           zIndex: 1000,
           position: 'absolute',
           left: '50%',
-          translate: '-50% -50px'
+          translate: '-50% -100px'
         }}
         className='text-white rounded-full m-2 p-1 px-6'
         >
