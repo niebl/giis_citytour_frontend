@@ -55,6 +55,10 @@ html, body {
   animation: fade 1s infinite alternate;
 }
 
+.leaflet-control-container .leaflet-routing-container-hide {
+  display: none;
+}
+
 /* Add dark theme to map */
 /* .leaflet-layer, */
 /* .leaflet-control-zoom-in, */

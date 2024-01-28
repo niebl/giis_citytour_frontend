@@ -7,9 +7,11 @@ import icon from '../../../assets/historyIcon3.svg'
 import iconRed from '../../../assets/historyIcon3_red.svg'
 import UserLocationMarker from '../UserLocation/UserLocationMarker';
 import useExternalData from '../useExternalData';
+import SitesRouting from '../routing/SitesRouting';
 
 import { 
     gameLengthState,
+    routingRequestedState,
     selectedStoryState,
     userLocationState, 
     gameWaypointProgressState as waypointProgessState,
@@ -34,6 +36,8 @@ const StoryView = ({ setSelectedFeature}) => {
     const tourData = useExternalData(story_id)
     const waypointProgress = useRecoilValue(waypointProgessState);
     const setGameLength = useSetRecoilState(gameLengthState)
+    const routingRequested = useRecoilValue(routingRequestedState)
+    console.log(routingRequested)
     
     if (tourData == undefined || tourData.features == undefined) {
         return <>
@@ -148,6 +152,11 @@ const StoryView = ({ setSelectedFeature}) => {
             <UserLocationMarker />
         </Pane>
 
+        { routingRequested &&
+        <Pane name="route" style={{ zIndex: 90 }}>
+            <SitesRouting />
+        </Pane>
+        }
         </>
     )
 }

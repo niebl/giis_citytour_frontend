@@ -37,3 +37,8 @@ export const selectedStoryState = atom({
   key: 'selectedStoryState',
   default: 1
 })
+
+export const routingRequestedState = atom({
+  key: 'routingRequestedState',
+  default: false
+})

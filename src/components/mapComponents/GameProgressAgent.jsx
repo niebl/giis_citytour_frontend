@@ -7,6 +7,7 @@ import distance from '@turf/distance'
 import useExternalData from "./useExternalData";
 
 import { 
+    routingRequestedState,
     selectedStoryState,
     userLocationState, 
     gameWaypointProgressState as waypointProgessState 
@@ -23,6 +24,7 @@ export default function GameProgressAgent(){
     const userLocation = useRecoilValue(userLocationState)
     const waypointProgress = useRecoilValue(waypointProgessState);
     const setWaypointProgress = useSetRecoilState(waypointProgessState)
+    const setRoutingRequested = useSetRecoilState(routingRequestedState)
 
     useEffect(()=>{
         if(!(tourData == undefined || tourData.features == undefined)){
@@ -36,6 +38,7 @@ export default function GameProgressAgent(){
                         {units: 'meters'}
                         ) <= radius ){
                         setWaypointProgress(waypointProgress+1)
+                        setRoutingRequested(false)
                     }
                 }
             }
