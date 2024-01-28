@@ -11,7 +11,15 @@ import {
     IconButton,
   } from "@material-tailwind/react";
 
+import { useRecoilValue } from "recoil";
+import { mapViewState } from "../../../atoms";
+
 const MoreInfoDrawer = ({ selectedFeature, setSelectedFeature }) => {
+    const mapView = useRecoilValue(mapViewState)
+
+    const [ readMore, setReadMore] = useState(false)
+    const clickReadMore = () => setReadMore(true)
+
     const [ open, setOpen ] = useState(false)
     const openDrawer = () => setOpen(true);
     const closeDrawer = () => {
@@ -24,7 +32,6 @@ const MoreInfoDrawer = ({ selectedFeature, setSelectedFeature }) => {
             if(!open){
                 openDrawer()
             }
-            console.log(selectedFeature)
         }
     }, [selectedFeature])
 
@@ -65,13 +72,44 @@ const MoreInfoDrawer = ({ selectedFeature, setSelectedFeature }) => {
                     <Typography variant="h5" color="blue-gray" className="mb-2">
                         {selectedFeature.name}
                     </Typography>
+
+                    { mapView == "cruising" &&
+                    <>
                     <Typography>
-                        {selectedFeature.long_desc}
+                        {selectedFeature.short_desc}
                     </Typography>
+
+                    { readMore &&
+                        <>
+                        <hr className="mt-2 mb-2"/>
+                        <Typography>
+                            {selectedFeature.long_desc}
+                        </Typography>
+                        </>
+                    }
+                    </>
+                    }
+
+                    { mapView == "story" &&
+                    <>
+                    <Typography>
+                        {selectedFeature.long_story}
+                    </Typography>
+
+                    <hr className="mt-2 mb-2"/>
+                    <Typography>
+                        {selectedFeature.task}
+                    </Typography>
+                    </>
+                    }
+                    
                 </CardBody>
+
+                { (mapView == "cruising" && !readMore) &&
                 <CardFooter className="pt-0">
-                    <Button>Read More</Button>
+                    <Button onClick={clickReadMore}>Read More</Button>
                 </CardFooter>
+                }
         </Card>
       </Drawer>
     </div>
