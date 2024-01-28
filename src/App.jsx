@@ -107,7 +107,7 @@ function App() {
 
           { mapView == 'story' &&
           <>
-            <GameProgressAgent/>
+            <GameProgressAgent setSelectedFeature={setSelectedFeature} />
             <StoryView setSelectedFeature={setSelectedFeature}>
             </StoryView>
           </>

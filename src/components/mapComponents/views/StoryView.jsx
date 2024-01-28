@@ -40,9 +40,6 @@ const StoryView = ({ setSelectedFeature}) => {
     const setGameLength = useSetRecoilState(gameLengthState)
     const routingRequested = useRecoilValue(routingRequestedState)
     
-
-    
-
     if (tourData == undefined || tourData.features == undefined) {
         return <>
             <UserLocationMarker />
@@ -52,7 +49,7 @@ const StoryView = ({ setSelectedFeature}) => {
     setGameLength(tourData.features.length)
 
     const onMarkerClick = (e) => {
-        console.log(e.target)
+        e.target.openPopup()
         const featureProperties = e.target.feature.properties;
         setSelectedFeature(featureProperties)
       }; 
@@ -63,8 +60,9 @@ const StoryView = ({ setSelectedFeature}) => {
 
     const waypointMarker = (feature, latlng) => {
         const { name, short_story, long_story } = feature.properties
-        const marker = L.marker(latlng, { icon: buildingIcon }).on('click', onMarkerClick);
-        marker.bindPopup(`<b>${name}</b><br />${short_story}`)
+        const marker = L.marker(latlng, { icon: buildingIcon })
+        .on('click', onMarkerClick)
+        .bindPopup(`<b>${name}</b><br />${short_story}`);
         return marker
     }
     const waypointMarkerInactive = (feature, latlng) => {
