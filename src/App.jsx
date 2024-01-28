@@ -8,20 +8,21 @@ import UserLocationMarker from './components/mapComponents/UserLocation/UserLoca
 import HistoricalData from './components/mapComponents/HistoricalData';
 
 import { useRecoilValue, useSetRecoilState  } from "recoil";
-import { mapViewState, gameWaypointProgressState, backendURL, gameLengthState } from "./atoms";
+import { mapViewState, gameWaypointProgressState, backendURL, gameLengthState, routingRequestedState } from "./atoms";
 import { useEffect } from 'react';
 import StoryView from './components/mapComponents/views/StoryView';
 import GameProgressAgent from './components/mapComponents/GameProgressAgent';
 import { TopNavbar } from './components/navbar/Navbar';
 import InfoModal from './components/InfoModal/InfoModal';
 import MoreInfoDrawer from './components/mapComponents/MoreInfo/MoreInfoDrawer';
-import SitesRouting from './components/mapComponents/routing/SitesRouting';
 
 function App() {
   const mapView = useRecoilValue(mapViewState);
   const setMapView = useSetRecoilState(mapViewState);
   const gameProgress = useRecoilValue(gameWaypointProgressState);
   const gameLength = useRecoilValue(gameLengthState)
+  const routingRequested = useRecoilValue(routingRequestedState)
+  const setRoutingRequested = useSetRecoilState(routingRequestedState)
 
   const [ selectedFeature, setSelectedFeature ] = useState(null)
 
@@ -30,6 +31,15 @@ function App() {
   useEffect(() => {
     setBackendURL(import.meta.env.VITE_BACKEND_URL)
   })
+
+  function requestRouting(){
+    if (!routingRequested){
+      setRoutingRequested(true)
+    } else {
+      setRoutingRequested(false)
+    }
+  }
+
   return (
     <>
       <div className="h-full" id="pageWrapper"
@@ -41,19 +51,49 @@ function App() {
         <TopNavbar />
 
         <div style={{flex: "1 1 auto"}}>
+        
+        <div
+        style={{
+          right: 0,
+          display: "flex",
+          flexFlow: "row",
+          width: "80%",
+          position: 'absolute',
+          justifyContent: 'right',
+        }}>
+
         <h1
           style={{
             backgroundColor: "#00000060",
             zIndex: 1000,
-            position: 'absolute',
-            left: '50%',
-            translate: '-50% 0'
+            //position: 'absolute',
+            //left: '50%',
+            //translate: '-50% 0'
           }}
           className='text-white rounded-full m-2 p-1 px-6'
         >
           {mapView == 'cruising' && "Exploration mode"}
           {mapView == 'story' && "Story mode"}
         </h1>
+
+        { mapView == 'story' &&
+        <h1
+          style={{
+            backgroundColor: "#f2e2ae",
+            zIndex: 2000,
+            //position: 'absolute',
+            //right: '0%',
+            //translate: '-50% 0'
+          }}
+          className='border-black rounded-full m-2 p-1 px-6 drop-shadow-md hover:drop-shadow-none hover:shadow-inner'
+          onClick={()=>{requestRouting()}}
+        >        
+          {!routingRequested && "I'm lost"}
+          {routingRequested && "Hide Navigation"}
+        </h1>
+        }
+
+        </div>
     
         <Map style={{zIndex: 0}}>
           <UserLocationAgent />
@@ -72,9 +112,6 @@ function App() {
             </StoryView>
           </>
           } 
-          {
-            mapView == 'story' && <SitesRouting />
-          }
         </Map>
         </div>
       </div>

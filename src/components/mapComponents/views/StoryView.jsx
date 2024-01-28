@@ -7,9 +7,11 @@ import icon from '../../../assets/historyIcon3.svg'
 import iconRed from '../../../assets/historyIcon3_red.svg'
 import UserLocationMarker from '../UserLocation/UserLocationMarker';
 import useExternalData from '../useExternalData';
+import SitesRouting from '../routing/SitesRouting';
 
 import { 
     gameLengthState,
+    routingRequestedState,
     selectedStoryState,
     userLocationState, 
     gameWaypointProgressState as waypointProgessState,
@@ -34,6 +36,7 @@ const StoryView = ({ setSelectedFeature}) => {
     const tourData = useExternalData(story_id)
     const waypointProgress = useRecoilValue(waypointProgessState);
     const setGameLength = useSetRecoilState(gameLengthState)
+    const routingRequested = useRecoilValue(routingRequestedState)
     
     if (tourData == undefined || tourData.features == undefined) {
         return <>
@@ -44,6 +47,7 @@ const StoryView = ({ setSelectedFeature}) => {
     setGameLength(tourData.features.length)
 
     const onMarkerClick = (e) => {
+        console.log(e.target)
         const featureProperties = e.target.feature.properties;
         setSelectedFeature(featureProperties)
       }; 
@@ -55,7 +59,7 @@ const StoryView = ({ setSelectedFeature}) => {
     const waypointMarker = (feature, latlng) => {
         const { name, short_story, long_story } = feature.properties
         const marker = L.marker(latlng, { icon: buildingIcon }).on('click', onMarkerClick);
-        marker.bindPopup(`<b>${name}</b><br />${long_story}`)
+        marker.bindPopup(`<b>${name}</b><br />${short_story}`)
         return marker
     }
     const waypointMarkerInactive = (feature, latlng) => {
@@ -67,8 +71,8 @@ const StoryView = ({ setSelectedFeature}) => {
         const marker = L.marker(latlng, { 
             icon: buildingIconActive
             }
-        ).on('click', onMarkerClick);
-        marker.bindPopup(`<b>${name}</b><br />${long_story}`)
+        )
+        marker.bindPopup(`<b>${name}</b><br />${short_story}`)
         return marker
     }
 
@@ -99,6 +103,13 @@ const StoryView = ({ setSelectedFeature}) => {
                 if(waypoint.properties.site_index == waypointProgress+1){
                     return (
                         <>
+                        <GeoJSON
+                            data={waypoint}
+                            key={"active_Waypoint"+index+Date.now()}
+                            pointToLayer={waypointMarkerToVisit}
+                            //onEachFeature={}
+                            //style={}
+                        />
                         <Circle 
                             center={[
                                 waypoint.geometry.coordinates[1],
@@ -109,13 +120,6 @@ const StoryView = ({ setSelectedFeature}) => {
                             opacity={0.6}
                             fillOpacity={0.1}
                             color='#ab000e'
-                        />
-                        <GeoJSON
-                            data={waypoint}
-                            key={"active_Waypoint"+index+Date.now()}
-                            pointToLayer={waypointMarkerToVisit}
-                            //onEachFeature={}
-                            //style={}
                         />
                         </>
                     )
@@ -148,6 +152,11 @@ const StoryView = ({ setSelectedFeature}) => {
             <UserLocationMarker />
         </Pane>
 
+        { routingRequested &&
+        <Pane name="route" style={{ zIndex: 90 }}>
+            <SitesRouting />
+        </Pane>
+        }
         </>
     )
 }
