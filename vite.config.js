@@ -17,7 +17,7 @@ export default defineConfig({
       input: {
         main: resolve(root, 'index.html'),
         game: resolve(root, 'game', 'index.html'),
-        impressum: resolve(root, 'about', 'index.html')
+        about: resolve(root, 'about', 'index.html')
       }
     }
   }
