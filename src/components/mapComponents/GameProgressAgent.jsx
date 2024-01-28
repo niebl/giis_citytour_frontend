@@ -17,7 +17,7 @@ function flip(coords){
     return [coords[1], coords[0]]
 }
 
-export default function GameProgressAgent(){
+export default function GameProgressAgent({setSelectedFeature}){
     const story_id = useRecoilValue(selectedStoryState)
     const tourData = useExternalData(story_id)
     
@@ -48,10 +48,11 @@ export default function GameProgressAgent(){
                         waypoint.geometry.coordinates, flip(userLocation),
                         {units: 'meters'}
                         ) <= radius ){
+                        window.sessionStorage.setItem(`progress_${story_id}`, waypointProgress)
                         setWaypointProgress(waypointProgress+1)
                         setRoutingRequested(false)
 
-                        window.sessionStorage.setItem(`progress_${story_id}`, waypointProgress)
+                        setSelectedFeature(waypoint.properties)                        
                     }
                 }
             }
