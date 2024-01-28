@@ -17,7 +17,7 @@ import { selectedStoryState } from "../../atoms";
 const HistoricalData = ({ setSelectedFeature }) => {
     //const map = useMap()
     const story_id = useRecoilValue(selectedStoryState)
-    const backendData = useExternalData(story_id)
+    const backendData = useExternalData("all")
 
     if (backendData == undefined || backendData.features == undefined) {
       return <></>

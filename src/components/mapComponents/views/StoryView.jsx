@@ -16,6 +16,7 @@ import {
     userLocationState, 
     gameWaypointProgressState as waypointProgessState,
 } from '../../../atoms';
+import { useEffect } from 'react';
 
 const buildingIcon = L.icon({
     iconUrl: icon,
@@ -35,9 +36,13 @@ const StoryView = ({ setSelectedFeature}) => {
     const story_id = useRecoilValue(selectedStoryState);
     const tourData = useExternalData(story_id)
     const waypointProgress = useRecoilValue(waypointProgessState);
+    const setWaypointProgress = useSetRecoilState(waypointProgessState)
     const setGameLength = useSetRecoilState(gameLengthState)
     const routingRequested = useRecoilValue(routingRequestedState)
     
+
+    
+
     if (tourData == undefined || tourData.features == undefined) {
         return <>
             <UserLocationMarker />

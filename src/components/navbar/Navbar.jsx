@@ -65,6 +65,7 @@ function NavList() {
           }
         </button>
       </Typography>
+      { mapView == 'story' &&
       <Typography         
         as="li"
         variant="paragraph"
@@ -82,6 +83,7 @@ function NavList() {
           }
         </button>
       </Typography>
+      }
     </ul>
   );
 }
