@@ -27,17 +27,20 @@ export default function GameProgressAgent({setSelectedFeature}){
     const setRoutingRequested = useSetRecoilState(routingRequestedState)
    
     const stored_progress = window.sessionStorage.getItem(`progress_${story_id}`)
+
     //load current progress from session-storage
     useEffect(() => {
         if (stored_progress){
-            console.log("yo")
             setWaypointProgress(
                 parseInt(window.sessionStorage.getItem(`progress_${story_id}`))
             )
+        } else if(stored_progress == null){
+            window.sessionStorage.setItem(`progress_${story_id}`, 0)
         }
     }, [story_id, stored_progress])
 
     useEffect(()=>{
+
         if(!(tourData == undefined || tourData.features == undefined)){
             const waypoints = tourData.features
             for (let waypoint of waypoints){
