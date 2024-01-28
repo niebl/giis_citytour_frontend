@@ -25,6 +25,17 @@ export default function GameProgressAgent(){
     const waypointProgress = useRecoilValue(waypointProgessState);
     const setWaypointProgress = useSetRecoilState(waypointProgessState)
     const setRoutingRequested = useSetRecoilState(routingRequestedState)
+   
+    const stored_progress = window.sessionStorage.getItem(`progress_${story_id}`)
+    //load current progress from session-storage
+    useEffect(() => {
+        if (stored_progress){
+            console.log("yo")
+            setWaypointProgress(
+                parseInt(window.sessionStorage.getItem(`progress_${story_id}`))
+            )
+        }
+    }, [story_id, stored_progress])
 
     useEffect(()=>{
         if(!(tourData == undefined || tourData.features == undefined)){
@@ -39,6 +50,8 @@ export default function GameProgressAgent(){
                         ) <= radius ){
                         setWaypointProgress(waypointProgress+1)
                         setRoutingRequested(false)
+
+                        window.sessionStorage.setItem(`progress_${story_id}`, waypointProgress)
                     }
                 }
             }
