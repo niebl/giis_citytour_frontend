@@ -44,7 +44,7 @@ function NavList() {
         variant="paragraph"
         className="p-1 font-medium"
       >
-        <a href="#" className="flex items-center transition-colors">
+        <a href="/giis_citytour_frontend/about/" className="flex items-center transition-colors">
           About
         </a>
       </Typography>
